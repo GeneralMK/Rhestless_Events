@@ -1,0 +1,74 @@
+from itertools import product
+from pyexpat import model
+import re
+from tkinter import CASCADE
+from unicodedata import category
+from django.db import models
+from django.core import serializers
+from django.contrib.auth.models import User
+# create your models
+class Host(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    address=models.TextField(null=True)
+    
+
+    def __str__(self):
+        return self.user.username
+
+class EventCategotry(models.Model):
+    title=models.CharField(max_length=100)
+    details =models.TextField(null=True)
+
+    def __str__(self):
+        return  self.title     
+
+class AddEvent(models.Model):
+    host=models.ForeignKey(Host, on_delete=models.SET_NULL,null=True)
+    category=models.ForeignKey(EventCategotry, on_delete=models.SET_NULL,null=True, related_name='category_products')
+    title=models.CharField(max_length=150)
+    details=models.TextField(null= True)
+    venue=models.CharField(max_length=100)
+    price=models.FloatField(default=0.00) 
+    featured_img=models.ImageField(upload_to='event_images/',null=True)  
+     
+
+    def __str__(self):
+        return self.title
+
+
+
+# participants model
+class Participants(models.Model):
+    user=models.ForeignKey(User,max_length=100, on_delete=models.CASCADE)
+    mobile_no=models.PositiveBigIntegerField()
+
+    def __str__(self):
+        return self.user.username
+
+#Order models
+
+class Order(models.Model):
+    customer = models.ForeignKey(Participants, on_delete=models.CASCADE, related_name='customer_orders')
+    order_time =models.DateTimeField(auto_now_add=True)  
+
+    def __unicode__(self):
+        return '%s' %(self.order_time)
+    
+
+class OrderItems(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
+    event  = models.ForeignKey(AddEvent, on_delete=models.CASCADE) 
+
+    
+    def __str__(self):
+        return self.event.title 
+
+
+class ParticipantAddress(models.Model):
+    customer=models.ForeignKey(Participants, on_delete=models.CASCADE, related_name='customer_addresses')
+    address=models.TextField(null=True)
+    default_address= models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.address
+

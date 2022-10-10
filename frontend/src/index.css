@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image:
+  linear-gradient(to right, grey 1px, transparent 1px),
+  linear-gradient(to bottom, grey 1px, transparent 1px);
+
+  
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.checkout-page{
+  background-color: #fff8ef;
+}
+#overlay{
+  /* background: hsla(39, 78%, 53%, 1); */
+
+/* background: radial-gradient(circle, hsla(39, 78%, 53%, 1) 0%, hsla(39, 79%, 79%, 1) 47%, hsla(0, 0%, 100%, 1) 90%, hsla(0, 0%, 100%, 1) 100%);
+
+background: -moz-radial-gradient(circle, hsla(39, 78%, 53%, 1) 0%, hsla(39, 79%, 79%, 1) 47%, hsla(0, 0%, 100%, 1) 90%, hsla(0, 0%, 100%, 1) 100%);
+
+background: -webkit-radial-gradient(circle, hsla(39, 78%, 53%, 1) 0%, hsla(39, 79%, 79%, 1) 47%, hsla(0, 0%, 100%, 1) 90%, hsla(0, 0%, 100%, 1) 100%); */
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#E5A428", endColorstr="#F4D7A0", GradientType=1 );
+}
+.grid-bg{
+  background: hsla(39, 78%, 53%, 1);
+
+  background: linear-gradient(90deg, hsla(39, 78%, 53%, 1) 0%, hsla(34, 100%, 97%, 1) 100%);
+  
+  background: -moz-linear-gradient(90deg, hsla(39, 78%, 53%, 1) 0%, hsla(34, 100%, 97%, 1) 100%);
+  
+  background: -webkit-linear-gradient(90deg, hsla(39, 78%, 53%, 1) 0%, hsla(34, 100%, 97%, 1) 100%);
+  
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#E5A428", endColorstr="#FFF8EF", GradientType=1 );
+}
