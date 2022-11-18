@@ -12,22 +12,18 @@ import {
   Select,
   Textarea 
 } from '@chakra-ui/react'
-
+import FAQs from '../components/FAQs'
 const Pricing = () => {
   return (
-    <Box>
+    <>
          <Marquee 
       text=" PRICING - PRICING - PRICING - PRICING - PRICING - "
       />
       <Earning />
       <PricingTab />
-      <Grid templateColumns='repeat(3, 1fr)'>
-  <GridItem w='100%' h='10' bg='blue.500'></GridItem>
-  <GridItem w='100%' h='10' bg='blue.500'></GridItem>
-  <GridItem w='100%' h='10' bg='blue.500'></GridItem>
-  
-</Grid>
-    </Box>
+   <FAQs />
+
+    </>
   )
 }
 

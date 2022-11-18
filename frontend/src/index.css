@@ -32,12 +32,4 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#E5A428", en
 }
 .grid-bg{
   background: hsla(39, 78%, 53%, 1);
-
-  background: linear-gradient(90deg, hsla(39, 78%, 53%, 1) 0%, hsla(34, 100%, 97%, 1) 100%);
-  
-  background: -moz-linear-gradient(90deg, hsla(39, 78%, 53%, 1) 0%, hsla(34, 100%, 97%, 1) 100%);
-  
-  background: -webkit-linear-gradient(90deg, hsla(39, 78%, 53%, 1) 0%, hsla(34, 100%, 97%, 1) 100%);
-  
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#E5A428", endColorstr="#FFF8EF", GradientType=1 );
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, GridItem , Text, Stack, Box, Flex, Image} from '@chakra-ui/react'
+import { Grid, GridItem , Text, Stack, Box, Flex, Image, Link} from '@chakra-ui/react'
 
 const Step1 = () => {
   return (
@@ -12,7 +12,7 @@ What kind of event are you hosting
   <GridItem w='100%' h='100%' bg="#fff8ef" display={'flex'} justifyContent="center" alignItems={'center'}>
   <Stack w={'100%'} display={'flex'} justifyContent="center" alignItems={'center'} spacing={12}>
     <Box w={'65%'} border="1px solid #2b2b2b" p={4}>
-<Flex w={'100%'} justifyContent="space-between" alignItems={'center'}>
+<Link><Flex w={'100%'} justifyContent="space-between" alignItems={'center'}>
   <Text>Public</Text>
   <Image
     boxSize='120px'
@@ -20,10 +20,10 @@ What kind of event are you hosting
     src='https://images.pexels.com/photos/1537638/pexels-photo-1537638.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
     alt='Dan Abramov'
   />
-</Flex>
+</Flex></Link>
     </Box>
     <Box w={'65%'} border="1px solid #2b2b2b" p={4}>
-<Flex w={'100%'} justifyContent="space-between" alignItems={'center'}>
+<Link href="/paid-event"><Flex w={'100%'} justifyContent="space-between" alignItems={'center'}>
   <Text>Private</Text>
   <Image
     boxSize='120px'
@@ -31,7 +31,7 @@ What kind of event are you hosting
     src='https://images.pexels.com/photos/3916019/pexels-photo-3916019.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load'
     alt='Dan Abramov'
   />
-</Flex>
+</Flex></Link>
     </Box>
   </Stack>
   </GridItem>

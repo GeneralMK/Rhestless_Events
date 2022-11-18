@@ -1,7 +1,8 @@
 from rest_framework import generics, permissions,pagination, viewsets
 from . import serializers
 from . import models
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse,HttpResponse
 # Create your views here.
 class HostList(generics.ListCreateAPIView):
     queryset = models.Host.objects.all()
@@ -11,6 +12,18 @@ class HostDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Host.objects.all()
     serializer_class=serializers.HostDetailSerializer    
 
+@csrf_exempt
+def host_login(request):
+	email=request.POST['email']
+	password=request.POST['password']
+	try:
+		hostData=models.Host.objects.get(email=email,password=password)
+	except models.Host.DoesNotExist:
+		hostData=None
+	if hostData:
+		return JsonResponse({'bool':True,'host_id':hostData.id})
+	else:
+		return JsonResponse({'bool':False})
 class EventList(generics.ListCreateAPIView):
     queryset = models.AddEvent.objects.all()
     serializer_class=serializers.EventSerializer

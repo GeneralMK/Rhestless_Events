@@ -19,6 +19,8 @@ import EventDetail from './pages/EventDetail';
 import Pricing from "./pages/Pricing"
 import Checkout from './pages/Checkout';
 import CreateEvent from "./pages/CreateEvent";
+import Dashboard from "./pages/Dashboard";
+import PaidEvent from "./pages/PaidEvent";
 
 function App() {
   
@@ -53,7 +55,8 @@ function App() {
       <Route  path='/checkout' element={<Checkout />}/>
       <Route  path='/pricing' element={<Pricing />}/>
       <Route  path='/create-event' element={<CreateEvent />}/>
-
+      <Route  path='/paid-event' element={<PaidEvent />}/>
+      <Route  path='/dashboard' element={<Dashboard />}/>
     </Routes>
   {/* <Box position="fixed" zIndex="99" right="-2%" top="50%" transform="rotate(-0.25turn)" bg="#e5a428" m="0" p={25} borderTopRadius="md" fontSize="1xl" color={'#fafafa'} className="fixed-card">Book Tickets</Box>
   <Box position="fixed" zIndex="99" right="-2%" top="33%" transform="rotate(-0.25turn)" bg="#e5a428" m="0" p={25} borderTopRadius="md" fontSize="1xl" color={'#fafafa'}className="fixed-card" >Create Event</Box> */}

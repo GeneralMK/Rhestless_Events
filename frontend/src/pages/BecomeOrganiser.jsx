@@ -20,6 +20,7 @@ import DigitalWallet from '../components/DigitalWallet';
 import Dashboard from '../components/Dashboard';
 import ServicesTwo from "../components/ServicesTwo"
 import Marquee from "../components/Marquee"
+import PricingTab from '../components/PricingTab';
   
   export default function CallToActionWithIllustration() {
     return (
@@ -84,6 +85,7 @@ import Marquee from "../components/Marquee"
      <Marquee 
       text="PRICING -PRICING -PRICING -PRICING - PRICING - "
       />
+      <PricingTab />
       </Container>
     );
   }

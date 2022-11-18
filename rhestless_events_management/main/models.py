@@ -8,25 +8,39 @@ from django.core import serializers
 from django.contrib.auth.models import User
 # create your models
 class Host(models.Model):
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    name= models.CharField(max_length=100, default="name",  null=True)
+    last_name= models.CharField(max_length=100, default="name",  null=True)
+    email=models.CharField(max_length=100, default="example@gmail.com", null=True)
+    password=models.CharField(max_length=100, default="pass",  null=True)
     address=models.TextField(null=True)
-    
 
     def __str__(self):
         return self.user.username
+    class Meta:
+    		verbose_name_plural="1. Hosts"
+           
 
 class EventCategotry(models.Model):
     title=models.CharField(max_length=100)
     details =models.TextField(null=True)
 
     def __str__(self):
-        return  self.title     
+        return  self.title 
+    class Meta:
+        verbose_name_plural="2. Event Category"        
 
 class AddEvent(models.Model):
     host=models.ForeignKey(Host, on_delete=models.SET_NULL,null=True)
     category=models.ForeignKey(EventCategotry, on_delete=models.SET_NULL,null=True, related_name='category_products')
     title=models.CharField(max_length=150)
+    TYPE=(
+        ("Private","Private"),
+        ("Public", "Public")
+    )
+    type= models.CharField(max_length=200, null=True, choices=TYPE)
     details=models.TextField(null= True)
+    
     venue=models.CharField(max_length=100)
     price=models.FloatField(default=0.00) 
     featured_img=models.ImageField(upload_to='event_images/',null=True)  
@@ -34,6 +48,9 @@ class AddEvent(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        		verbose_name_plural="3. Add Event"    
 
 
 
@@ -45,6 +62,9 @@ class Participants(models.Model):
     def __str__(self):
         return self.user.username
 
+    class Meta:
+        verbose_name_plural="4. Participants"    
+
 #Order models
 
 class Order(models.Model):
@@ -53,6 +73,8 @@ class Order(models.Model):
 
     def __unicode__(self):
         return '%s' %(self.order_time)
+    class Meta:
+        	verbose_name_plural="5. Orders"    
     
 
 class OrderItems(models.Model):
@@ -63,6 +85,8 @@ class OrderItems(models.Model):
     def __str__(self):
         return self.event.title 
 
+    class Meta:
+        verbose_name_plural="6. Order Items"
 
 class ParticipantAddress(models.Model):
     customer=models.ForeignKey(Participants, on_delete=models.CASCADE, related_name='customer_addresses')
@@ -71,4 +95,7 @@ class ParticipantAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+    class Meta:
+        verbose_name_plural="7. Participant Address"    
 

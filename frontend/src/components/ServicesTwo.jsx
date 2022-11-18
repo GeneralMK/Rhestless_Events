@@ -15,7 +15,7 @@ function ServicesTwo() {
 <Marquee 
       text="SERVICES -SERVICES -SERVICES -SERVICES -SERVICES - "
       />
-<UnorderedList h="100%" listStyleType="0" position={'relative'} w="100%" overflowX={'hidden'}>
+{/* <UnorderedList h="100%" listStyleType="0" position={'relative'} w="100%" overflowX={'hidden'}>
   <ListItem h="80vh" position={'absolute'} bg="#fff8ef" w="100%" p={12} >
 <Flex direction={'column'} h='100%' justifyContent="space-between"  >
   <Text fontSize={'120px'} fontFamily="New Font">01</Text>
@@ -49,10 +49,8 @@ function ServicesTwo() {
     </Flex>
 </Flex>
   </ListItem>
-  {/* <ListItem>Consectetur adipiscing elit</ListItem>
-  <ListItem>Integer molestie lorem at massa</ListItem>
-  <ListItem>Facilisis in pretium nisl aliquet</ListItem> */}
-</UnorderedList>
+
+</UnorderedList> */}
   </Box>
 
   )

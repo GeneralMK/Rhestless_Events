@@ -10,6 +10,7 @@ urlpatterns = [
    
     path('hosts/',views.HostList.as_view()),
     path('host/<int:pk>',views.HostDetails.as_view()),
+    path('host-login',views.host_login),
     path('Events/',views.EventList.as_view()),
     path('Event/<int:pk>',views.EventDetails.as_view()),
     path('customers/',views.ParticipantsList.as_view()),

@@ -9,6 +9,9 @@ import Step3 from './HostFormProgress/Step3';
 import Step4 from './HostFormProgress/Step4';
 import Step5 from './HostFormProgress/Step5';
 import Step6 from './HostFormProgress/Step6';
+import Step7 from './HostFormProgress/Step7';
+import Step8 from './HostFormProgress/Step8';
+import Step9 from './HostFormProgress/Step9';
 const CreateEventForm = () => {
     const step1Content = <Step1 />;
     const step2Content = <Step2 />;
@@ -16,9 +19,9 @@ const CreateEventForm = () => {
     const step4Content = <Step4 />;
     const step5Content = <Step5 />;
     const step6Content = <Step6 />;
-    const step7Content = <h1>dgdfgfdgdfg</h1>;
-    const step8Content = <h1>dgdfgfdgdfg</h1>;
-    const step9Content = <h1>dgdfgfdgdfg</h1>;
+    const step7Content = <Step7 />
+    const step8Content = <Step8/>
+    const step9Content = <Step9 />
     function step2Validator() {
         return true;
       }
