@@ -53,7 +53,7 @@ function App() {
       <Route  path='/about' element={<About />}/>
       <Route  path='/contact' element={<Contact />}/>
       <Route  path='/become-organiser' element={<BecomeOrganiser />}/>
-      <Route  path='/hostDashboard' element={<hostDashboard />}/>
+      <Route  path='/host-dashboard' element={<hostDashboard />}/>
       <Route  path='/Sidebar' element={<Sidebar />}/>
       <Route  path='/entity-detail' element={<EntityDetail />}/>
       <Route  path='/all-entities' element={<AllEntities />}/>
