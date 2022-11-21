@@ -6,6 +6,7 @@ import { Box } from '@chakra-ui/react'
 import Navbar from "./components/Navbar"
 
 
+
 import Footer from "./components/NewFooter"
 
 import Home from './pages/Home';
@@ -21,6 +22,9 @@ import Checkout from './pages/Checkout';
 import CreateEvent from "./pages/CreateEvent";
 import Dashboard from "./pages/Dashboard";
 import PaidEvent from "./pages/PaidEvent";
+import styled from 'styled-components';
+import Sidebar from './components/Sidebar'
+import hostDashboard from './components/hostDashboard'
 
 function App() {
   
@@ -49,6 +53,8 @@ function App() {
       <Route  path='/about' element={<About />}/>
       <Route  path='/contact' element={<Contact />}/>
       <Route  path='/become-organiser' element={<BecomeOrganiser />}/>
+      <Route  path='/hostDashboard' element={<hostDashboard />}/>
+      <Route  path='/Sidebar' element={<Sidebar />}/>
       <Route  path='/entity-detail' element={<EntityDetail />}/>
       <Route  path='/all-entities' element={<AllEntities />}/>
       <Route  path='/event-detail' element={<EventDetail />}/>
