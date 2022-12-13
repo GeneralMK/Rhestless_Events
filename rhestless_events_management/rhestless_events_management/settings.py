@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
+from datetime import timedelta
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,7 +37,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'main',
     'corsheaders',
-  
+    'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,9 +45,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    
+    'rest_framework.authtoken',
 ]
 
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
+}
 MIDDLEWARE = [
 
     'corsheaders.middleware.CorsMiddleware',
@@ -73,12 +81,14 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'frontend','build')],
         'APP_DIRS': True,
-        'OPTIONS': {
+       'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect'
             ],
         },
     },
@@ -87,19 +97,26 @@ TEMPLATES = [
 WSGI_APPLICATION = 'rhestless_events_management.wsgi.application'
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
-       
-    #     'rest_framework.permissions.isAuthenticated',
-    # ],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-       
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ],
-
     'DEFAULT_PAGINATION_CLASS': 'main.pagination.CustomPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+    
+}
+# REST_FRAMEWORK = {
+#     # 'DEFAULT_PERMISSION_CLASSES': [
+       
+#     #     'rest_framework.permissions.isAuthenticated',
+#     # ],
+#     # 'DEFAULT_AUTHENTICATION_CLASSES': [
+       
+#     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     # ],
+
+    
     
    
-}
+# }
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -115,6 +132,12 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER= 'doejames7699@gmail.com'
+EMAIL_HOST_PASSWORD ='iabvmzvwpwmuxqba'
+EMAIL_USE_TLS= True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -134,9 +157,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES':('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
+# https://docs.djangoproject.com/en/4.1/topics/i18n/ 
 
 LANGUAGE_CODE = 'en-us'
 

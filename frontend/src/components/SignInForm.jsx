@@ -7,7 +7,6 @@ import {
   FormLabel,
   Input,
   InputGroup,
-
   InputRightElement,
   Button,
   Heading,
@@ -16,17 +15,57 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { Stack, HStack, VStack } from '@chakra-ui/react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import {AiFillGoogleCircle} from "react-icons/ai"
-import {BsFacebook} from "react-icons/bs"
-import {AiFillTwitterCircle} from "react-icons/ai"
-import SliderMarquee from "../components/SliderMarquee"
-const SignInForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-const[name, setName]  = useState('')
+import Swal from 'sweetalert2';
 
-const handleInputChange = (e) => setName(e.target.value)
+import SliderMarquee from "./SliderMarquee"
+import axios from 'axios';
+const baseUrl='http://127.0.0.1:8000/api';
+
+const SignInForm = () => {
+
+  const [LoginData,setLoginData]=useState({
+    email:'',
+    password:''
+});
+
+const [errorMsg,seterrorMsg]=useState('');
+
+const handleChange=(event)=>{
+    setLoginData({
+        ...LoginData,
+        [event.target.name]:event.target.value
+    });
+}
+const LoginStatus=localStorage.getItem('LoginStatus');
+if(LoginStatus ==='true'){
+    window.location.href='/hostdash';
+}
+
+useEffect(()=>{
+    document.title='Rhestless Events Login'
+});
+const submitForm=()=>{
+  const hostFormData=new FormData();
+  hostFormData.append('email',LoginData.email)
+  hostFormData.append('password',LoginData.password)
+  try{
+      axios.post(baseUrl+'/host-login',hostFormData)
+      .then((res)=>{
+          if(res.data.bool===true){
+              localStorage.setItem('LoginStatus',true);
+              localStorage.setItem('hostId',res.data.host_id);
+              window.location.href='/hostdash';
+          }else{
+              seterrorMsg('Invalid Email Or Password!!');
+          }
+      });
+  }catch(error){
+      console.log(error);
+  }
+}
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
 <Grid templateColumns='repeat(2, 1fr)' gap={6} h="100vh" bg="#fff8ef">
@@ -44,7 +83,7 @@ const handleInputChange = (e) => setName(e.target.value)
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'5xl'} textAlign={'center'}      fontFamily='New Font'>
-            Sign up
+            Sign In
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
           An online eventing marketplace connecting event Planners, patrons and service providers
@@ -53,26 +92,9 @@ const handleInputChange = (e) => setName(e.target.value)
           </Text>
         </Stack>
         <HStack spacing='24px'>
-  <Box w='100%' h='40px'>
-    <Link>
-    <AiFillGoogleCircle
-  color={'#e5a428'}
-    size={35}/></Link>
-  </Box>
-  <Box w='100%' h='40px' >
-    <BsFacebook 
-    size={30}
-    color={'#e5a428'}
-    />
-  </Box>
-  <Box w='100%' h='40px'>
-    <AiFillTwitterCircle
-    size={35}
-    color={'#e5a428'}
-    />
-  </Box>
+
 </HStack>
-<Text textAlign={'center'}>Or use your email for registration</Text>
+
         <Box
           rounded={'lg'}
           bg={useColorModeValue('white', 'gray.700')}
@@ -80,35 +102,22 @@ const handleInputChange = (e) => setName(e.target.value)
           p={8}>
           <Stack spacing={4}>
             <HStack>
-              <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
-                  <Input type="text" 
-                  onChange={handleInputChange}
-                  value={name}
-                  id="name"
-                  />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
+              
+            
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input value={LoginData.email} onChange={handleChange} name="email" type="email" />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
+                <Input value={LoginData.password} onChange={handleChange} name="password" type={showPassword ? 'text' : 'password'} />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
                     onClick={() =>
+                     
                       setShowPassword((showPassword) => !showPassword)
                     }>
                     {showPassword ? <ViewIcon /> : <ViewOffIcon />}
@@ -119,19 +128,19 @@ const handleInputChange = (e) => setName(e.target.value)
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
-           
+                onClick={submitForm}
                 size="lg"
                 bg={"#e5a428"}
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
                 }}>
-                Sign up
+                Sign In
               </Button>
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link color={'#e5a428'}>Login</Link>
+                Already a user? <Link color={'#e5a428'} to={'sign-up'}>Sign Up</Link>
               </Text>
             </Stack>
           </Stack>

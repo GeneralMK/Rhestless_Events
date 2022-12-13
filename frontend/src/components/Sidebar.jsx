@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom';
 import styled from 'styled-components'
 import { AiOutlineAppstore } from "react-icons/ai";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -17,7 +18,7 @@ function Sidebar() {
         <Section>
             <div className="top">
                     <div className="brand">
-                        <AiFillCodeSandboxCircle />
+                      
                         <span>Rhestless Events Management</span>
                     </div>
                     <div className="links">
@@ -37,7 +38,7 @@ function Sidebar() {
                             >
                                 <a href="#">
                                     <AiOutlineShoppingCart />
-                                    <span className="border">List Of Events</span>
+                                    <Link to='/List_events' className="border">List Of Events</Link>
                                 </a>
                             </li>
                             <li
@@ -46,7 +47,7 @@ function Sidebar() {
                             >
                                 <a href="#">
                                     <AiOutlineShopping />
-                                    <span className="border">Add Events</span>
+                                    <Link to='/create-event' className="border">Add Event</Link>
                                 </a>
                             </li>
                             <li
@@ -92,7 +93,7 @@ function Sidebar() {
             <div className="logout">
                 <a href="#">
                     <AiOutlineLogout />
-                    <span>Logout</span>
+                    <Link to='host-logout'>Logout</Link>
                 </a>
             </div>
         </Section>

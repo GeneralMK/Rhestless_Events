@@ -9,10 +9,10 @@ import Create from './CreateEventForm'
 // import Shopping from './Shopping'
 
 
-function hostDashboard() {
+function HostDashboard() {
     return (
         <Section>
-            <Navbar />
+        
             <div className="grid">
                 <div className="grid_1">
                     <Statistics />
@@ -21,7 +21,7 @@ function hostDashboard() {
                 </div>
                 <div className="grid_2">
                     <Analytics />
-                    <Create /> 
+                    {/* <Create />  */}
                     {/* <Add /> */}
                 </div>
             </div>
@@ -29,7 +29,7 @@ function hostDashboard() {
     )
 }
 
-export default hostDashboard
+export default HostDashboard
 const Section = styled.section `
 margin-left: 18vw;
 padding: 2rem;

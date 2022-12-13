@@ -37,7 +37,7 @@ function Entities(props) {
       axios.get(baseURL+'/Event/'+event_id)
       .then((res)=>{
         setEventDetails({
-              title:res.data.title,
+              title:res.data.event_name,
               detail:res.data.detail,
           });
       });
@@ -52,7 +52,7 @@ return(
 
   <Box display="flex" flexDirection="column" justifyContent="space-between" >
    
-  <Text  fontSize='8xl' textTransform="uppercase" className="title" fontFamily='New Font'>{data.title}</Text>
+  <Text  fontSize='8xl' textTransform="uppercase" className="title" fontFamily='New Font'>{data.event_name}</Text>
   <Text fontSize='xl' w="50%" >{data.details}</Text>
   </Box>
   <Box display="flex" gap={2} justifyContent="center" alignItems="center">

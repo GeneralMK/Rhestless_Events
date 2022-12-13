@@ -2,6 +2,10 @@ from rest_framework import serializers
 from . import models
 from django.contrib.auth.models import User
 
+class HostDashboardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.Host
+        fields=['total_host_events','total_sales_per_event']
 class HostSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Host
@@ -10,6 +14,11 @@ class HostSerializer(serializers.ModelSerializer):
         super(HostSerializer, self).__init__(*args, **kwargs) 
         # self.Meta.depth=1
 
+class HostDashboardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.Host
+        fields=['total_sales','total_expenses','total_revenue']
+        
 class HostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Host

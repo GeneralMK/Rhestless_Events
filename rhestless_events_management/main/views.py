@@ -12,6 +12,12 @@ class HostDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Host.objects.all()
     serializer_class=serializers.HostDetailSerializer    
 
+	# permission_classes=[permissions.IsAuthenticated]
+
+class HostDashboard(generics.RetrieveAPIView):
+	queryset=models.Host.objects.all()
+	serializer_class=serializers.HostDashboardSerializer
+    
 @csrf_exempt
 def host_login(request):
 	email=request.POST['email']

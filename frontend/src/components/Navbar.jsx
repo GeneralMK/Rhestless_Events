@@ -78,7 +78,7 @@ export default function WithSubnavigation() {
             fontSize={'sm'}
             fontWeight={400}
             variant={'link'}
-            href={'/host-dashboard'}>
+            href={'/become-a-host'}>
             Become a host
           </Button>
           <Button

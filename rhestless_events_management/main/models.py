@@ -5,18 +5,17 @@ from tkinter import CASCADE
 from unicodedata import category
 from django.db import models
 from django.core import serializers
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 # create your models
 class Host(models.Model):
-    user=models.OneToOneField(User, on_delete=models.CASCADE)
-    name= models.CharField(max_length=100, default="name",  null=True)
-    last_name= models.CharField(max_length=100, default="name",  null=True)
-    email=models.CharField(max_length=100, default="example@gmail.com", null=True)
-    password=models.CharField(max_length=100, default="pass",  null=True)
+    name= models.CharField(max_length=100, null=True)
+    last_name= models.CharField(max_length=100, null=True)
+    email=models.CharField(max_length=100, null=True)
+    password=models.CharField(max_length=100, null=True)
     address=models.TextField(null=True)
 
     def __str__(self):
-        return self.user.username
+        return str(self.name)
     class Meta:
     		verbose_name_plural="1. Hosts"
            
@@ -31,38 +30,40 @@ class EventCategotry(models.Model):
         verbose_name_plural="2. Event Category"        
 
 class AddEvent(models.Model):
-    host=models.ForeignKey(Host, on_delete=models.SET_NULL,null=True)
-    category=models.ForeignKey(EventCategotry, on_delete=models.SET_NULL,null=True, related_name='category_products')
-    title=models.CharField(max_length=150)
+    host=models.ForeignKey(Host, on_delete=models.CASCADE,null=True)
+    category=models.ForeignKey(EventCategotry, on_delete=models.CASCADE,null=True, related_name='category_products')
+    event_name=models.CharField(max_length=150)
     TYPE=(
         ("Private","Private"),
         ("Public", "Public")
     )
     type= models.CharField(max_length=200, null=True, choices=TYPE)
     details=models.TextField(null= True)
-    
     venue=models.CharField(max_length=100)
     price=models.FloatField(default=0.00) 
     featured_img=models.ImageField(upload_to='event_images/',null=True)  
      
 
     def __str__(self):
-        return self.title
+        return str(self.event_name)
 
     class Meta:
-        		verbose_name_plural="3. Add Event"    
+        	verbose_name_plural="3. Add Events"    
 
 
 
 # participants model
 class Participants(models.Model):
-    user=models.ForeignKey(User,max_length=100, on_delete=models.CASCADE)
-    mobile_no=models.PositiveBigIntegerField()
-
-    def __str__(self):
-        return self.user.username
-
-    class Meta:
+   name= models.CharField(max_length=100,  null=True)
+   last_name= models.CharField(max_length=100,  null=True)
+   email=models.CharField(max_length=100, default="example@gmail.com", null=True)
+   password=models.CharField(max_length=100, default="pass",  null=True)
+   address=models.TextField(null=True)
+   mobile_no=models.PositiveBigIntegerField()
+   
+   def __str__(self):
+        return str(self.name)
+   class Meta:
         verbose_name_plural="4. Participants"    
 
 #Order models

@@ -12,6 +12,8 @@ import Step6 from './HostFormProgress/Step6';
 import Step7 from './HostFormProgress/Step7';
 import Step8 from './HostFormProgress/Step8';
 import Step9 from './HostFormProgress/Step9';
+
+const baseURL = "127.0.0.1:8000/api/Events/";
 const CreateEventForm = () => {
     const step1Content = <Step1 />;
     const step2Content = <Step2 />;

@@ -1,4 +1,3 @@
-
 import React, {useState, useEffect} from "react"
 import { BrowserRouter as Router, Route, Routes, useLocation} from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
@@ -15,7 +14,8 @@ import About from './pages/About';
 import BecomeOrganiser from './pages/BecomeOrganiser';
 import EntityDetail from './pages/EntityDetail';
 import AllEntities from './pages/AllEntities';
-import SignIn from './pages/SignIn';
+import SignIn from "./pages/SignIn";
+import SignUp from './pages/SignUp';
 import EventDetail from './pages/EventDetail';
 import Pricing from "./pages/Pricing"
 import Checkout from './pages/Checkout';
@@ -24,7 +24,8 @@ import Dashboard from "./pages/Dashboard";
 import PaidEvent from "./pages/PaidEvent";
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar'
-import hostDashboard from './components/hostDashboard'
+// import HostDashboard from './components/HostDashboard'
+import HostDash from "./pages/HostDash";
 
 function App() {
   
@@ -48,12 +49,13 @@ function App() {
  <Router>
  {  !isSignedIn  ?  <Navbar/> : null }
      <Routes>
+     <Route exact path='/sign-up' element={<SignUp />}/>
      <Route exact path='/sign-in' element={<SignIn />}/>
       <Route exact path='/' element={<Home />}/>
       <Route  path='/about' element={<About />}/>
       <Route  path='/contact' element={<Contact />}/>
       <Route  path='/become-organiser' element={<BecomeOrganiser />}/>
-      <Route  path='/host-dashboard' element={<hostDashboard />}/>
+      {/* <Route  path='/host-dashboard' element={<hostDashboard />}/> */}
       <Route  path='/Sidebar' element={<Sidebar />}/>
       <Route  path='/entity-detail' element={<EntityDetail />}/>
       <Route  path='/all-entities' element={<AllEntities />}/>
@@ -63,6 +65,8 @@ function App() {
       <Route  path='/create-event' element={<CreateEvent />}/>
       <Route  path='/paid-event' element={<PaidEvent />}/>
       <Route  path='/dashboard' element={<Dashboard />}/>
+      <Route  path='/hostdash' element={<HostDash />}/>
+      {  !isSignedIn  ?  <Footer/> : null }
     </Routes>
   {/* <Box position="fixed" zIndex="99" right="-2%" top="50%" transform="rotate(-0.25turn)" bg="#e5a428" m="0" p={25} borderTopRadius="md" fontSize="1xl" color={'#fafafa'} className="fixed-card">Book Tickets</Box>
   <Box position="fixed" zIndex="99" right="-2%" top="33%" transform="rotate(-0.25turn)" bg="#e5a428" m="0" p={25} borderTopRadius="md" fontSize="1xl" color={'#fafafa'}className="fixed-card" >Create Event</Box> */}
