@@ -24,12 +24,18 @@ import Dashboard from "./pages/Dashboard";
 import PaidEvent from "./pages/PaidEvent";
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar'
-// import HostDashboard from './components/HostDashboard'
+import { Provider } from "react-redux";
+import store from './store'
 import HostDash from "./pages/HostDash";
+import ActivateAccount from "./pages/ActivateAccount";
+import Reset_Password from "./pages/Reset_Password";
+import ResetPass_Confirmation from "./pages/ResetPass_Confirmation";
 
+import Layout from "./hocs/Layout";
 function App() {
   
   const [isSignedIn, setIsSignedIn] = useState(window.location.href == "http://localhost:3000/sign-in")
+  
   const [counter, setCounter] = useState(0)
   // const[counter, setCounter] = useState(0)
   
@@ -44,13 +50,14 @@ function App() {
   }
   // {alertUser()}
   return (
-
+<Provider store={store}>
     <ChakraProvider>
  <Router>
  {  !isSignedIn  ?  <Navbar/> : null }
      <Routes>
-     <Route exact path='/sign-up' element={<SignUp />}/>
-     <Route exact path='/sign-in' element={<SignIn />}/>
+    
+      <Route exact path='/sign-up' element={<SignUp />}/>
+      <Route exact path='/sign-in' element={<SignIn />}/>
       <Route exact path='/' element={<Home />}/>
       <Route  path='/about' element={<About />}/>
       <Route  path='/contact' element={<Contact />}/>
@@ -66,14 +73,17 @@ function App() {
       <Route  path='/paid-event' element={<PaidEvent />}/>
       <Route  path='/dashboard' element={<Dashboard />}/>
       <Route  path='/hostdash' element={<HostDash />}/>
-      {  !isSignedIn  ?  <Footer/> : null }
+      <Route path='/activate/:uid/:token' element={<ActivateAccount />} />
+      <Route path='/reset-password' element={<Reset_Password/>} />
+      <Route path='/password/reset/confirm/:uid/:token' element ={<ResetPass_Confirmation />} />
+      
     </Routes>
-  {/* <Box position="fixed" zIndex="99" right="-2%" top="50%" transform="rotate(-0.25turn)" bg="#e5a428" m="0" p={25} borderTopRadius="md" fontSize="1xl" color={'#fafafa'} className="fixed-card">Book Tickets</Box>
-  <Box position="fixed" zIndex="99" right="-2%" top="33%" transform="rotate(-0.25turn)" bg="#e5a428" m="0" p={25} borderTopRadius="md" fontSize="1xl" color={'#fafafa'}className="fixed-card" >Create Event</Box> */}
+  
   <Footer />
   
  </Router>
  </ChakraProvider>
+ </Provider>
   );
 }
 

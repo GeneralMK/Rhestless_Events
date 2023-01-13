@@ -5,6 +5,7 @@ import {
   Box,
   FormControl,
   FormLabel,
+ 
   Input,
   InputGroup,
   InputRightElement,
@@ -17,54 +18,50 @@ import {
 import { Stack, HStack, VStack } from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import Swal from 'sweetalert2';
-
 import SliderMarquee from "./SliderMarquee"
+import { connect } from 'react-redux';
 import axios from 'axios';
+import {login} from '../actions/auth'
 const baseUrl='http://127.0.0.1:8000/api';
 
-const SignInForm = () => {
+const SignInForm = ({ login }) => {
 
-  const [LoginData,setLoginData]=useState({
-    email:'',
-    password:''
-});
+ const [formData, setFormData] =useState({
+  email:'',
+  password:''
+ });
 
-const [errorMsg,seterrorMsg]=useState('');
+ const {email, password} =formData
 
-const handleChange=(event)=>{
-    setLoginData({
-        ...LoginData,
-        [event.target.name]:event.target.value
-    });
-}
-const LoginStatus=localStorage.getItem('LoginStatus');
-if(LoginStatus ==='true'){
-    window.location.href='/hostdash';
-}
+ const onChange = e => setFormData({
+  ...formData,
+  [e.target.name]:e.target.value
+ });
 
-useEffect(()=>{
-    document.title='Rhestless Events Login'
-});
-const submitForm=()=>{
-  const hostFormData=new FormData();
-  hostFormData.append('email',LoginData.email)
-  hostFormData.append('password',LoginData.password)
-  try{
-      axios.post(baseUrl+'/host-login',hostFormData)
-      .then((res)=>{
-          if(res.data.bool===true){
-              localStorage.setItem('LoginStatus',true);
-              localStorage.setItem('hostId',res.data.host_id);
-              window.location.href='/hostdash';
-          }else{
-              seterrorMsg('Invalid Email Or Password!!');
-          }
-      });
-  }catch(error){
-      console.log(error);
-  }
-}
+ const onSubmit= e =>{
+  e.preventDefault();
+  login(email, password)
+  console.log(login(email, password))
+ }
+// const submitForm=()=>{
+//   const hostFormData=new FormData();
+//   hostFormData.append('email',LoginData.email)
+//   hostFormData.append('password',LoginData.password)
+//   try{
+//       axios.post(baseUrl+'/host-login',hostFormData)
+//       .then((res)=>{
+//           if(res.data.bool===true){
+//               localStorage.setItem('LoginStatus',true);
+//               localStorage.setItem('hostId',res.data.host_id);
+//               // window.location.href='/hostdash';
+//           }else{
+//               seterrorMsg('Invalid Email Or Password!!');
+//           }
+//       });
+//   }catch(error){
+//       console.log(error);
+//   }
+// }
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -94,8 +91,8 @@ const submitForm=()=>{
         <HStack spacing='24px'>
 
 </HStack>
-
-        <Box
+    <Box
+         
           rounded={'lg'}
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
@@ -107,12 +104,12 @@ const submitForm=()=>{
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input value={LoginData.email} onChange={handleChange} name="email" type="email" />
+              <Input value={email} onChange={e => onChange(e)} name="email" type="email" />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input value={LoginData.password} onChange={handleChange} name="password" type={showPassword ? 'text' : 'password'} />
+                <Input value={password} onChange={e => onChange(e)} name="password" type={showPassword ? 'text' : 'password'} />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
@@ -128,7 +125,7 @@ const submitForm=()=>{
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
-                onClick={submitForm}
+                 onClick={ onSubmit }
                 size="lg"
                 bg={"#e5a428"}
                 color={'white'}
@@ -140,11 +137,17 @@ const submitForm=()=>{
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link color={'#e5a428'} to={'sign-up'}>Sign Up</Link>
+                Already a user? <Link color={'#e5a428'} href={'/sign-up'}>Sign Up</Link>
+              </Text>
+
+              <Text align={'center'}>
+                Forgot Your Password? <Link color={'#e5a428'} href={'/reset-password'} cursor="point">Rest Password</Link>
               </Text>
             </Stack>
           </Stack>
         </Box>
+
+           
       </Stack>
     </Flex>
 
@@ -153,4 +156,8 @@ const submitForm=()=>{
   )
 }
 
-export default SignInForm
+const mapStateToProps = state => ({
+  //is authent
+})
+
+export default connect(null, {login})  (SignInForm);

@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reset_password_confirm } from '../actions/auth';
-
+import { Grid, GridItem } from '@chakra-ui/react'
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+  Link,
+} from '@chakra-ui/react';
 const ResetPasswordConfirm = ({ match, reset_password_confirm }) => {
     const [requestSent, setRequestSent] = useState(false);
     const [formData, setFormData] = useState({
@@ -25,7 +39,7 @@ const ResetPasswordConfirm = ({ match, reset_password_confirm }) => {
     };
 
     if (requestSent) {
-        return <Redirect to='/' />
+        return <Navigate href={'/sing-in'} />
     }
 
     return (

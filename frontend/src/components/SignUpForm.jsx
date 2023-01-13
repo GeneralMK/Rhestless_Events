@@ -29,14 +29,16 @@ const baseUrl='http://127.0.0.1:8000/api/hosts/';
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 const [hostData, setHostData]=useState({
+
   'name':'',
   'last_name':'',
   'email':'',
-  'password':''
+  'password':'',
+  'user':''
 });
 
   // Change Element value
-  const handleInputChange=(event)=>{
+  const  handleInputChange=(event)=>{
     setHostData({
         ...hostData,
         [event.target.name]:event.target.value
@@ -52,6 +54,7 @@ const [hostData, setHostData]=useState({
       hostFormData.append("last_name", hostData.last_name)
       hostFormData.append("email", hostData.email)
       hostFormData.append("password", hostData.password)
+      hostFormData.append("user", hostData.user)
  
 
       try{
@@ -61,6 +64,7 @@ const [hostData, setHostData]=useState({
                   'last_name':'',
                   'email':'',
                   'password':'',
+                  'user':'',
                   'status':'success'
               });
               if(response.status==201){
@@ -118,24 +122,29 @@ const [hostData, setHostData]=useState({
           </Text>
         </Stack>
         <HStack spacing='24px'>
-  {/* <Box w='100%' h='40px'>
+  <Box w='100%' h='40px'>
     <Link>
     <AiFillGoogleCircle
   color={'#e5a428'}
-    size={35}/></Link>
-  </Box> */}
-  {/* <Box w='100%' h='40px' >
+    size={35}/>
+    </Link>
+  </Box> 
+   <Box w='100%' h='40px' >
+
+    <Link>
     <BsFacebook 
     size={30}
     color={'#e5a428'}
     />
+    </Link>
+    
   </Box>
   <Box w='100%' h='40px'>
     <AiFillTwitterCircle
     size={35}
     color={'#e5a428'}
     />
-  </Box> */}
+  </Box>
 </HStack>
 <Text textAlign={'center'}>Or use your email for registration</Text>
         <Box
@@ -164,6 +173,11 @@ const [hostData, setHostData]=useState({
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
               <Input value={hostData.email} onChange={handleInputChange} name="email" type="email" />
+            </FormControl>
+
+            <FormControl id="user" isRequired>
+              <FormLabel>username</FormLabel>
+              <Input value={hostData.user} onChange={handleInputChange} name="user" type="text" />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
@@ -196,8 +210,10 @@ const [hostData, setHostData]=useState({
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link color={'#e5a428'} to={'sign-in'} cursor="point">Login</Link>
+                Already a user? <Link color={'#e5a428'} href={'/sign-in'}>Login</Link>
               </Text>
+
+              
             </Stack>
           </Stack>
         </Box>
