@@ -4,6 +4,7 @@ from django.urls import path, re_path, include
 from rest_framework_simplejwt import views as jwt_views
 #from main.admin import event_admin_site
 from django.views.generic import TemplateView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     #re_path("",TemplateView.as_view(template_name="index.html")),
@@ -18,5 +19,5 @@ urlpatterns = [
     # path('auth/', include('djoser.social.urls')), 
 
 ]
-urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
+#urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
 
