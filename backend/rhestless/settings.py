@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.permissions',
     'rest_framework.authtoken',
     'django.contrib.sites',
     'allauth',
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'rhestless.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,16 +76,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'rhestless.wsgi.application'
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
+#   'DEFAULT_AUTHENTICATION_CLASSES': (
+#     'rest_framework.authentication.BasicAuthentication',
+#     'rest_framework.authentication.SessionAuthentication',
+# ),
+   'DEFAULT_PERMISSION_CLASSES': [
+
+    'rest_framework.permissions.IsAuthenticated',
+
+   ],
        
-    #     'rest_framework.permissions.isAuthenticated',
-    # ],
-#'DEFAULT_PAGINATION_CLASS': 'main.pagination.CustomPagination',
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+   
+   'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
     
 }
+
+
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES':('JWT',),
@@ -95,8 +104,8 @@ SIMPLE_JWT = {
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE':True,
-    'USERNAME_CHANGED_CONFIRMATION': True,
-    'PASSWORD_CHANGED_CONFIRMATION': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'SET_PASSWORD_RETYPE':True,
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
@@ -117,7 +126,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Events_Management',
+        'NAME': 'Event_Management_DB',
         'USER':'postgres',
         'PASSWORD':'root',
         'HOST':'localhost'
@@ -177,4 +186,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
-AUTH_USER_MODEL = 'main.User'
+AUTH_USER_MODEL = 'main.MyUser'

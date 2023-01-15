@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite
 from . import models
 from main.models import Host
-from django.contrib.auth.models import User
+
 
 
 
@@ -14,6 +14,7 @@ admin.site.register(models.Participants)
 admin.site.register(models.Order)
 admin.site.register(models.OrderItems)
 admin.site.register(models.ParticipantAddress)
+
 
 
 
