@@ -5,7 +5,6 @@ import {
   Box,
   FormControl,
   FormLabel,
- 
   Input,
   InputGroup,
   InputRightElement,
@@ -20,9 +19,8 @@ import { useState, useEffect } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import SliderMarquee from "./SliderMarquee"
 import { connect } from 'react-redux';
-import axios from 'axios';
 import {login} from '../actions/auth'
-const baseUrl='http://127.0.0.1:8000/api';
+
 
 const SignInForm = ({ login }) => {
 
@@ -41,27 +39,9 @@ const SignInForm = ({ login }) => {
  const onSubmit= e =>{
   e.preventDefault();
   login(email, password)
-  console.log(login(email, password))
+  
  }
-// const submitForm=()=>{
-//   const hostFormData=new FormData();
-//   hostFormData.append('email',LoginData.email)
-//   hostFormData.append('password',LoginData.password)
-//   try{
-//       axios.post(baseUrl+'/host-login',hostFormData)
-//       .then((res)=>{
-//           if(res.data.bool===true){
-//               localStorage.setItem('LoginStatus',true);
-//               localStorage.setItem('hostId',res.data.host_id);
-//               // window.location.href='/hostdash';
-//           }else{
-//               seterrorMsg('Invalid Email Or Password!!');
-//           }
-//       });
-//   }catch(error){
-//       console.log(error);
-//   }
-// }
+
   const [showPassword, setShowPassword] = useState(false);
 
   return (

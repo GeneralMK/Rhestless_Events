@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-8vp--2k4het7b-w&7h0#bcufa0kq@)9fpx10094-l83@bm#od5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -94,7 +94,9 @@ REST_FRAMEWORK = {
 }
 
 
-
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:8000',
+# ]
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES':('JWT',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
