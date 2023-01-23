@@ -16,31 +16,40 @@ import {
 } from '@chakra-ui/react';
 import { Stack, HStack, VStack } from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import SliderMarquee from "./SliderMarquee"
 import { connect } from 'react-redux';
 import {login} from '../actions/auth'
 
 
-const SignInForm = ({ login }) => {
-
+const SignInForm = ({ login,isAuthenticated }) => {
+const navigate = useNavigate()
  const [formData, setFormData] =useState({
   email:'',
   password:''
  });
 
- const {email, password} =formData
+ const {email, password} = formData
 
- const onChange = e => setFormData({
-  ...formData,
-  [e.target.name]:e.target.value
+ const onChange = e => setFormData({ 
+  ...formData, [e.target.name]: e.target.value,
+
+  
  });
+ 
 
  const onSubmit= e =>{
   e.preventDefault();
   login(email, password)
   
  }
+
+//Check if user is authenticated
+if(isAuthenticated)
+{
+  navigate("/")
+}
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -84,12 +93,21 @@ const SignInForm = ({ login }) => {
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input value={email} onChange={e => onChange(e)} name="email" type="email" />
+              <Input     placeholder='Email'
+                        name='email'
+                        value={email}
+                        onChange={e => onChange(e)} type="email" />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input value={password} onChange={e => onChange(e)} name="password" type={showPassword ? 'text' : 'password'} />
+                <Input     
+                        placeholder='Password'
+                        name='password'
+                        value={password}
+                        onChange={e => onChange(e)}
+                        minLength='6'
+                        required type={showPassword ? 'text' : 'password'} />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
@@ -104,8 +122,9 @@ const SignInForm = ({ login }) => {
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
+              type='submit'
                 loadingText="Submitting"
-                 onClick={ onSubmit }
+                 onClick={ e => onSubmit(e) }
                 size="lg"
                 bg={"#e5a428"}
                 color={'white'}
@@ -137,7 +156,7 @@ const SignInForm = ({ login }) => {
 }
 
 const mapStateToProps = state => ({
-  //is authent
+  isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(null, {login})  (SignInForm);
+export default connect(mapStateToProps, {login})  (SignInForm);

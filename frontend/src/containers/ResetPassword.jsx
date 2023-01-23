@@ -82,15 +82,18 @@ const ResetPassword = ({ reset_password }) => {
               
             
             </HStack>
-            <FormControl id="email" isRequired>
+           <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input  name="email" type="email" />
+              <Input     placeholder='Email'
+                        name='email'
+                        value={email}
+                        onChange={e => onChange(e)} type="email" />
             </FormControl>
             
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
-                onClick={''}
+                onClick={e => onSubmit(e)}
                 size="lg"
                 bg={"#e5a428"}
                 color={'white'}

@@ -23,80 +23,46 @@ import {AiFillGoogleCircle} from "react-icons/ai"
 import {BsFacebook} from "react-icons/bs"
 import {AiFillTwitterCircle} from "react-icons/ai"
 import SliderMarquee from "./SliderMarquee"
-import axios from 'axios';
-const baseUrl='http://127.0.0.1:8000/api/hosts/';
+import { connect } from 'react-redux';
+import {signup} from '../actions/auth'
+import { Navigate } from 'react-router-dom';
+const SignUpForm = ({signup, isAuthenticated}) => {
 
-const SignUpForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-const [hostData, setHostData]=useState({
-
-  'name':'',
+const[accountCreated, setAccountCreated] = useState(false)
+ const [formData, setFormData] = useState({
+  'first_name':'',
   'last_name':'',
   'email':'',
   'password':'',
-  'user':''
-});
+  're_password':''
 
-  // Change Element value
-  const  handleInputChange=(event)=>{
-    setHostData({
-        ...hostData,
-        [event.target.name]:event.target.value
-    });
-}
+ })
 
-    // End
+ const {first_name, last_name, email, password, re_password} = formData;
 
-    // Submit Form
-    const submitForm=()=>{
-      const hostFormData=new FormData();
-      hostFormData.append("name", hostData.name)
-      hostFormData.append("last_name", hostData.last_name)
-      hostFormData.append("email", hostData.email)
-      hostFormData.append("password", hostData.password)
-      hostFormData.append("user", hostData.user)
- 
+ const onChange= e =>setFormData({
+  ...formData,
+  [e.target.name]:e.target.value
+ })
+ const [showPassword, setShowPassword] = useState(false)
+ const onSubmit = e =>{
+  e.preventDefault();
+  if(password == re_password)
+  {
+    console.log(formData)
+    signup(first_name, last_name, email, password, re_password)
+    setAccountCreated(true)
+  }
+ }
 
-      try{
-          axios.post(baseUrl,hostFormData).then((response)=>{
-              setHostData({
-                  'name':'',
-                  'last_name':'',
-                  'email':'',
-                  'password':'',
-                  'user':'',
-                  'status':'success'
-              });
-              if(response.status==201){
-                Swal.fire({
-                    title: 'Successfully Registered!',
-                    icon: 'success',
-                    toast:true,
-                    timer:3000,
-                    position:'top-right',
-                    timerProgressBar:true,
-                    showConfirmButton: false
-                });
-            }
-            else{
-              Swal.fire({
-                title: 'Something Went Wrong!',
-                icon: 'error',
-                toast:true,
-                timer:3000,
-                position:'top-right',
-                timerProgressBar:true,
-                showConfirmButton: false
-            });
-            }
-          });
-      }catch(error){
-          console.log(error);
-          setHostData({'status':'error'})
-      }
-      
-  };
-
+ if(isAuthenticated)
+ {
+  return <Navigate to='/'/>
+ }
+ if(accountCreated)
+ {
+  return <Navigate to='/sign-in'/>
+ }
   return (
 <Grid templateColumns='repeat(2, 1fr)' gap={6} h="100vh" bg="#fff8ef">
   <GridItem w='100%' h='100%'overflow={'hidden'} id="overlay" position={'relative'}>
@@ -159,30 +125,30 @@ const [hostData, setHostData]=useState({
                 <FormControl id="firstName" isRequired>
                
                   <FormLabel>First Name</FormLabel>
-                  <Input value={hostData.name} onChange={handleInputChange} name="name" type="text"
+                  <Input value={first_name} onChange={e => onChange(e)} name="first_name" type="text"
                   />
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName">
+                <FormControl id="lastName" isRequired>
                   <FormLabel>Last Name</FormLabel>
-                  <Input value={hostData.last_name} onChange={handleInputChange} name="last_name" type="text" />
+                  <Input value={last_name} onChange={e => onChange(e)} name="last_name" type="text" />
                 </FormControl>
               </Box>
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input value={hostData.email} onChange={handleInputChange} name="email" type="email" />
+              <Input value={email} onChange={e=>onChange(e)} name="email" type="email" />
             </FormControl>
 
             <FormControl id="user" isRequired>
-              <FormLabel>username</FormLabel>
-              <Input value={hostData.user} onChange={handleInputChange} name="user" type="text" />
+              <FormLabel>Password</FormLabel>
+              <Input value={password} onChange={e => onChange(e)} name="password" type={showPassword ? 'text' : 'password'} />
             </FormControl>
             <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Confirm Password</FormLabel>
               <InputGroup>
-                <Input value={hostData.password} onChange={handleInputChange} name="password" type={showPassword ? 'text' : 'password'} />
+                <Input value={re_password} onChange={e=>onChange(e)} name="re_password" type={showPassword ? 'text' : 'password'} />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
@@ -198,7 +164,7 @@ const [hostData, setHostData]=useState({
             <Stack spacing={10} pt={2}>
               <Button
                 loadingText="Submitting"
-                onClick={submitForm}
+                onClick={e=>onSubmit(e)}
                 size="lg"
                 bg={"#e5a428"}
                 color={'white'}
@@ -222,7 +188,10 @@ const [hostData, setHostData]=useState({
 
   </GridItem>
 </Grid>
-  )
-}
+  );
+};
 
-export default SignUpForm
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps, {signup})(SignUpForm)
