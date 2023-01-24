@@ -24,7 +24,6 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'main',
     'corsheaders',
-    'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,9 +40,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'djoser',
+    'social_django',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist'
 ]
 
 MIDDLEWARE = [
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect'
             ],
         },
     },
@@ -76,10 +81,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'rhestless.wsgi.application'
 
 REST_FRAMEWORK = {
-#   'DEFAULT_AUTHENTICATION_CLASSES': (
-#     'rest_framework.authentication.BasicAuthentication',
-#     'rest_framework.authentication.SessionAuthentication',
-# ),
+
    'DEFAULT_PERMISSION_CLASSES': [
 
     'rest_framework.permissions.IsAuthenticated',
@@ -101,7 +103,16 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES':('JWT',),
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_TOKEN_CLASSES':(
+        'rest_framework_simplejwt.tokens.AccessToken'
+    )
 }
+
+AUTHENTICATION_BACKENDS = (
+   'social_core.backends.google.GoogleOAuth2' ,
+   'django.contrib.auth.backends.ModelBackend'
+) 
+
 
 DJOSER = {
     'LOGIN_FIELD': 'email',
@@ -117,16 +128,27 @@ DJOSER = {
     'SERIALIZERS': {
         'user_create':'main.serializers.UserCreateSerializer',
         'user':'main.serializers.UserCreateSerializer',
+        'current_user':'main.serializers.UserCreateSerializer',
         'user_delete':'djoser.serializers.UserDeleteSerializer',
     },
 }
+
+SOCIAL_AUTH_OAUTH2_KEY = '176481907220-7t62rgb4u6idfir22baaq2foh5ri6fob.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid'
+]
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
+
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
+     
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Events_Management',
         'USER':'postgres',
@@ -189,3 +211,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
 AUTH_USER_MODEL = 'main.MyUser'
+
