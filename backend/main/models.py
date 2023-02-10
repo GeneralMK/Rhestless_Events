@@ -59,7 +59,7 @@ class UserManager(BaseUserManager):
         
         return user    
 
-class MyUser(AbstractBaseUser, PermissionsMixin):
+class Users(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -84,7 +84,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
           
 
 class Host(models.Model):
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE,default='none', blank=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE,default='none', blank=True)
     username= models.CharField(max_length=255)
     name= models.CharField(max_length=100, null=True)
     last_name= models.CharField(max_length=100, null=True)

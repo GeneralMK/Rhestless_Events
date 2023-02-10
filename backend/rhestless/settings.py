@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-8vp--2k4het7b-w&7h0#bcufa0kq@)9fpx10094-l83@bm#od5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['http://localhost:8000','*']
 
 
 # Application definition
@@ -46,15 +46,17 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'social_django.middleware.SocialAuthExceptionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  
+    #'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -82,11 +84,11 @@ WSGI_APPLICATION = 'rhestless.wsgi.application'
 
 REST_FRAMEWORK = {
 
-   'DEFAULT_PERMISSION_CLASSES': [
+#    'DEFAULT_PERMISSION_CLASSES': [
 
-    'rest_framework.permissions.IsAuthenticated',
+#     'rest_framework.permissions.IsAuthenticated',
 
-   ],
+#    ],
        
    
    'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -110,7 +112,8 @@ SIMPLE_JWT = {
 
 AUTHENTICATION_BACKENDS = (
    'social_core.backends.google.GoogleOAuth2' ,
-   'django.contrib.auth.backends.ModelBackend'
+   'django.contrib.auth.backends.ModelBackend',
+   
 ) 
 
 
@@ -125,6 +128,8 @@ DJOSER = {
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL': True,
+    'SOCIAL_AUTH_TOKEN_STRATEGY':'djoser.social.token.jwt.TokenStrategy',
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS':['http://localhost:8000', '*'],
     'SERIALIZERS': {
         'user_create':'main.serializers.UserCreateSerializer',
         'user':'main.serializers.UserCreateSerializer',
@@ -133,8 +138,8 @@ DJOSER = {
     },
 }
 
-SOCIAL_AUTH_OAUTH2_KEY = '176481907220-7t62rgb4u6idfir22baaq2foh5ri6fob.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_OAUTH2_KEY = '1057790290310-tmlf3pniakbisihhjfpb7gac5uckrfii.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
@@ -142,7 +147,18 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
 ]
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
-
+# configure the Google API credentials
+# SOCIALACCOUNT_PROVIDERS = {
+#    'google': {
+#        'SCOPE': [
+#            'profile',
+#            'email',
+#        ],
+#        'AUTH_PARAMS': {
+#            'access_type': 'online',
+#        }
+#    }
+# }
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -210,5 +226,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
-AUTH_USER_MODEL = 'main.MyUser'
-
+AUTH_USER_MODEL = 'main.Users'

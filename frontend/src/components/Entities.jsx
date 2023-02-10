@@ -18,7 +18,7 @@ function Entities(props) {
 
 
   useEffect(() =>{
-    fetchData(baseUrl+'/Events')
+    fetchData(baseUrl+'/Events/')
     fetchDataDetails()
   },[])
   
@@ -40,6 +40,7 @@ function Entities(props) {
               title:res.data.event_name,
               detail:res.data.detail,
           });
+          console.log(res)
       });
   }catch(error){
       console.log(error);

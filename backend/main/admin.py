@@ -7,6 +7,8 @@ from main.models import Host
 
 
 # Register your models here.
+admin.site.register(models.Users)
+
 admin.site.register(models.AddEvent)
 admin.site.register(models.Host)
 admin.site.register(models.EventCategotry)

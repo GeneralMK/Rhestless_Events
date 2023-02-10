@@ -26,6 +26,7 @@ import SliderMarquee from "./SliderMarquee"
 import { connect } from 'react-redux';
 import {signup} from '../actions/auth'
 import { Navigate } from 'react-router-dom';
+import axios from 'axios';
 const SignUpForm = ({signup, isAuthenticated}) => {
 
 const[accountCreated, setAccountCreated] = useState(false)
@@ -54,6 +55,16 @@ const[accountCreated, setAccountCreated] = useState(false)
     setAccountCreated(true)
   }
  }
+
+ const continueWithGoogle = async () => {
+  try {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/social-auth/complete/google-oauth2/`)
+
+      window.location.replace(res.data.authorization_url);
+  } catch (err) {
+
+  }
+};
 
  if(isAuthenticated)
  {
@@ -91,6 +102,7 @@ const[accountCreated, setAccountCreated] = useState(false)
   <Box w='100%' h='40px'>
     <Link>
     <AiFillGoogleCircle
+    onClick={continueWithGoogle}
   color={'#e5a428'}
     size={35}/>
     </Link>
