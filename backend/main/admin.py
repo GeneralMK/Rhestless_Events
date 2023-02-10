@@ -2,12 +2,14 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite
 from . import models
 from main.models import Host
-
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
 
 # Register your models here.
-admin.site.register(models.Users)
+@admin.register(models.MyUser)
+class MyUserAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name']
 
 admin.site.register(models.AddEvent)
 admin.site.register(models.Host)

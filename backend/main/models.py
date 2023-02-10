@@ -59,7 +59,7 @@ class UserManager(BaseUserManager):
         
         return user    
 
-class Users(AbstractBaseUser, PermissionsMixin):
+class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -70,7 +70,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = []
 
     def get_full_name(self):
         return self.first_name
@@ -84,15 +84,15 @@ class Users(AbstractBaseUser, PermissionsMixin):
           
 
 class Host(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.CASCADE,default='none', blank=True)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE,default='none', blank=True)
     username= models.CharField(max_length=255)
-    name= models.CharField(max_length=100, null=True)
+    first_name= models.CharField(max_length=100, null=True)
     last_name= models.CharField(max_length=100, null=True)
     email=models.CharField(max_length=255, unique=True)
     password=models.CharField(max_length=100, null=True)
    
     def __str__(self):
-            return self.name
+            return self.first_name
     class Meta:
     		verbose_name_plural="1. Hosts"  
 
