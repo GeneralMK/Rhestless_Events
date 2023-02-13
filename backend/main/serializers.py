@@ -13,7 +13,7 @@ class UserCreateSerializer(UserCreateSerializer):
 class HostDashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Host
-        fields=['total_host_events','total_sales_per_event']
+        fields=['total_host_events']
 class HostSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Host
@@ -25,7 +25,7 @@ class HostSerializer(serializers.ModelSerializer):
 class HostDashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Host
-        fields=['total_sales','total_expenses','total_revenue']
+        fields='__all__'
         
 class HostDetailSerializer(serializers.ModelSerializer):
     class Meta:

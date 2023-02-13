@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'djoser',
     'social_django',
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist'
+    'rest_framework_swagger',
+    'rest_framework_simplejwt.token_blacklist',
+    'drf_yasg',
+    'social.apps.django_app.default',
 ]
 
 MIDDLEWARE = [
@@ -89,11 +92,11 @@ REST_FRAMEWORK = {
 #     'rest_framework.permissions.IsAuthenticated',
 
 #    ],
-       
+       'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
    
-   'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+#    'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
     
 }
 
@@ -111,8 +114,10 @@ SIMPLE_JWT = {
 }
 
 AUTHENTICATION_BACKENDS = (
-   'social_core.backends.google.GoogleOAuth2' ,
-   'django.contrib.auth.backends.ModelBackend',
+   'social.backends.facebook.FacebookOAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
    
 ) 
 
@@ -129,7 +134,7 @@ DJOSER = {
     'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL': True,
     'SOCIAL_AUTH_TOKEN_STRATEGY':'djoser.social.token.jwt.TokenStrategy',
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS':['http://localhost:8000', '*'],
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS':['http://localhost:8000'],
     'SERIALIZERS': {
         'user_create':'main.serializers.UserCreateSerializer',
         'user':'main.serializers.UserCreateSerializer',
@@ -138,8 +143,8 @@ DJOSER = {
     },
 }
 
-SOCIAL_AUTH_OAUTH2_KEY = '1057790290310-tmlf3pniakbisihhjfpb7gac5uckrfii.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_OAUTH2_KEY = '125868404289-ogr81makh1h9gvi19mf2n8mvib8436k5.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
@@ -176,8 +181,8 @@ DATABASES = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER= 'doejames7699@gmail.com'
-EMAIL_HOST_PASSWORD ='iabvmzvwpwmuxqba'
+EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS= True
 
 
@@ -227,3 +232,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
 AUTH_USER_MODEL = 'main.MyUser'
+
+SPECTACULAR_SETTINGS = {
+
+    # available SwaggerUI configuration parameters
+    # https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "persistAuthorization": True,
+        "displayOperationId": True,
+      
+    },
+    # available SwaggerUI versions: https://github.com/swagger-api/swagger-ui/releases
+    "SWAGGER_UI_DIST": "//unpkg.com/swagger-ui-dist@3.35.1", # default
+    "SWAGGER_UI_FAVICON_HREF": STATIC_URL + "logo.png", # default is swagger favicon
+    
+}

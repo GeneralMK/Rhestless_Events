@@ -5,7 +5,7 @@ from . import views
 from rest_framework import routers
 
 router=routers.DefaultRouter()
-router.register('address', views.ParticipantAddressViewSet)
+# router.register('address', views.ParticipantAddressViewSet)
 urlpatterns = [
    
     path('hosts/',views.HostList.as_view()),
